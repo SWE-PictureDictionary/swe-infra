@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: progress-manager
+  labels:
+    app: progress-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: progress-manager
+  template:
+    metadata:
+      labels:
+        app: progress-manager
+    spec:
+      containers:
+        - name: progress-manager
+          image: sinedon/progress-manager:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: CONTENT_ACCESS_URL
+              value: http://content-access
+            - name: PROGRESS_ACCESS_URL
+              value: http://progress-access
+            - name: COMPLETION_ENGINE_URL
+              value: http://completion-engine
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: progress-manager
+spec:
+  selector:
+    app: progress-manager
+  ports:
+    - port: 80
+      targetPort: 8080

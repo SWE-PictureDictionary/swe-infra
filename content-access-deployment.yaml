@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-access
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-access
+  template:
+    metadata:
+      labels:
+        app: content-access
+    spec:
+      containers:
+        - name: content-access
+          image: sinedon/content-access:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              value: mongodb://mongo:27017/picture-dictionary
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-access
+spec:
+  selector:
+    app: content-access
+  ports:
+    - port: 80
+      targetPort: 8080

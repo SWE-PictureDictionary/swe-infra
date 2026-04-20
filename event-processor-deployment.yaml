@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-processor
+  labels:
+    app: event-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-processor
+  template:
+    metadata:
+      labels:
+        app: event-processor
+    spec:
+      containers:
+        - name: event-processor
+          image: sinedon/event-processor:latest
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+            - name: PROGRESS_ACCESS_URL
+              value: http://progress-access
+            - name: CONTENT_ACCESS_URL
+              value: http://content-access

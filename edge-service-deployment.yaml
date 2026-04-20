@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edge-service
+  template:
+    metadata:
+      labels:
+        app: edge-service
+    spec:
+      containers:
+        - name: edge-service
+          image: sinedon/edge-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: CONTENT_SERVICE_URL
+              value: http://content-manager:8080
+            - name: PROGRESS_SERVICE_URL
+              value: http://progress-manager:80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge-service
+spec:
+  type: ClusterIP
+  selector:
+    app: edge-service
+  ports:
+    - port: 80
+      targetPort: 8080

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: completion-engine
+  labels:
+    app: completion-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: completion-engine
+  template:
+    metadata:
+      labels:
+        app: completion-engine
+    spec:
+      containers:
+        - name: completion-engine
+          image: sinedon/completion-engine:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: completion-engine
+spec:
+  selector:
+    app: completion-engine
+  ports:
+    - port: 80
+      targetPort: 8080

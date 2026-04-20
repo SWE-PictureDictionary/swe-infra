@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: progress-access
+  labels:
+    app: progress-access
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: progress-access
+  template:
+    metadata:
+      labels:
+        app: progress-access
+    spec:
+      containers:
+        - name: progress-access
+          image: sinedon/progress-access:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/progressdb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: postgres
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: progress-access
+spec:
+  selector:
+    app: progress-access
+  ports:
+    - port: 80
+      targetPort: 8080

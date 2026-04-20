@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-manager
+  labels:
+    app: content-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-manager
+  template:
+    metadata:
+      labels:
+        app: content-manager
+    spec:
+      containers:
+        - name: content-manager
+          image: sinedon/content-manager:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONTENT_ACCESS_URL
+              value: http://content-access
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-manager
+spec:
+  selector:
+    app: content-manager
+  ports:
+    - port: 8080
+      targetPort: 8080
