@@ -1,69 +1,70 @@
 SWE Microservices Project
 
-This project is a distributed microservices system built with Spring Boot, Docker, and Kubernetes. Each service is maintained in its own repository and deployed together using Kubernetes.
+This project is a distributed microservices system built with Spring Boot, Docker, and Kubernetes. Each service is maintained in its own repository under a shared GitHub organization and deployed together using Kubernetes.
+
+Organization
+
+All repositories are now managed under the GitHub organization:
+
+SWE-PictureDictionary
 
 Repositories
 
-Each service is separated into its own GitHub repository:
+Each service is separated into its own repository within the organization:
 
-UI:
-https://github.com/sinedon/swe-ui
+UI
+https://github.com/SWE-PictureDictionary/swe-ui
 
-Edge Service (API Gateway):
-https://github.com/sinedon/swe-edge-service
+Edge Service (API Gateway)
+https://github.com/SWE-PictureDictionary/swe-edge-service
 
-Config Repo:
-https://github.com/sinedon/swe-config-repo
+Config Repository
+https://github.com/SWE-PictureDictionary/swe-config-repo
 
-Config Service:
-https://github.com/sinedon/swe-config-service
+Config Service
+https://github.com/SWE-PictureDictionary/swe-config-service
 
-Content Access:
-https://github.com/sinedon/swe-content-access
+Content Access
+https://github.com/SWE-PictureDictionary/swe-content-access
 
-Content Manager:
-https://github.com/sinedon/swe-content-manager
+Content Manager
+https://github.com/SWE-PictureDictionary/swe-content-manager
 
-Event Processor:
-https://github.com/sinedon/swe-event-processor
+Event Processor
+https://github.com/SWE-PictureDictionary/swe-event-processor
 
-Progress Access:
-https://github.com/sinedon/swe-progress-access
+Progress Access
+https://github.com/SWE-PictureDictionary/swe-progress-access
 
-Progress Manager:
-https://github.com/sinedon/swe-progress-manager
+Progress Manager
+https://github.com/SWE-PictureDictionary/swe-progress-manager
 
-Completion Engine:
-https://github.com/sinedon/swe-completion-engine
+Completion Engine
+https://github.com/SWE-PictureDictionary/swe-completion-engine
 
-Kubernetes Infrastructure:
-https://github.com/sinedon/swe-infra
+Kubernetes Infrastructure
+https://github.com/SWE-PictureDictionary/swe-infra
 
 Running the Project (Kubernetes)
-
-Clone the infrastructure repository
-
-git clone https://github.com/sinedon/swe-infra
-
+1. Clone the infrastructure repository
+git clone https://github.com/SWE-PictureDictionary/swe-infra
 cd swe-infra
 
-Deploy all services
-
+2. Deploy all services
 kubectl apply -f .
 
-Restart deployments (ensures latest images are used)
-
+3. Restart deployments (pull latest images)
 kubectl rollout restart deployment
 
-Check pod status
-
+4. Check pod status
 kubectl get pods
 
-Wait until all pods show "Running".
 
-Access the application
+Wait until all pods show Running.
 
+5. Access the application
 kubectl port-forward svc/ui 8000:80
+
 
 Then open in your browser:
 
@@ -71,17 +72,38 @@ http://localhost:8000/
 
 Development Workflow
 
-Each service is developed in its own repository
-Make changes in the appropriate service repository
-You can test locally using Docker Compose if needed
+Each microservice is developed in its own repository within the organization
+
+Clone and work within the specific service you want to modify
+
+Test locally (Docker or Docker Compose recommended)
+
 After making changes:
+
 Verify the service works locally
-Push changes to the corresponding repository
-Confirm everything still works in Kubernetes
+
+Push changes to the corresponding repository in the organization
+
+Ensure CI/CD workflows pass (if configured)
+
+Restart Kubernetes deployments to pull updated images
+
+Configuration
+
+Configuration is handled through:
+
+Config Repository
+https://github.com/SWE-PictureDictionary/swe-config-repo
+
+Config Service
+https://github.com/SWE-PictureDictionary/swe-config-service
+
+These provide centralized configuration management for all services.
 
 Notes
 
-Kubernetes does NOT automatically update running containers when images change
+Kubernetes does not automatically update running containers when images change
+
 You must restart deployments to pull the latest images
+
 All services communicate through the edge-service (API gateway)
-Configuration is handled via config-service and config-repo
