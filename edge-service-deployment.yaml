@@ -22,9 +22,9 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
             - name: CONTENT_SERVICE_URL
-              value: http://content-manager:8080
+              value: http://content-manager
             - name: PROGRESS_SERVICE_URL
-              value: http://progress-manager:80
+              value: http://progress-manager
 ---
 apiVersion: v1
 kind: Service
