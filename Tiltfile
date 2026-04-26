@@ -16,7 +16,6 @@ docker_build("sinedon/completion-engine", "../swe-completion-engine")
 docker_build("sinedon/event-processor", "../swe-event-processor")
 docker_build("sinedon/config-service", "../swe-config-service")
 
-
 k8s_yaml([
     "ui-deployment.yaml",
     "edge-service.yml",
@@ -26,13 +25,13 @@ k8s_yaml([
     "progress-manager-deployment.yaml",
     "completion-engine-deployment.yaml",
     "event-processor-deployment.yaml",
-    "config-service-deployment.yaml",  
+    "config-service-deployment.yaml",
     "mongo-deployment.yaml",
     "postgre-deployment.yaml",
     "rabbitmq-deployment.yaml",
+    "redis-deployment.yaml",
     "ingress.yaml"
 ])
-
 
 k8s_resource(
     "ui",

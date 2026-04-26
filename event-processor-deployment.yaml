@@ -18,12 +18,41 @@ spec:
         - name: event-processor
           image: sinedon/event-processor:latest
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
+
+            - name: SPRING_CONFIG_IMPORT
+              value: optional:configserver:http://config-service
+
             - name: SPRING_RABBITMQ_HOST
               value: rabbitmq
+
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+
+            - name: SPRING_DATA_REDIS_HOST
+              value: redis
+
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"
+
             - name: PROGRESS_ACCESS_URL
               value: http://progress-access
+
             - name: CONTENT_ACCESS_URL
               value: http://content-access
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-processor
+spec:
+  selector:
+    app: event-processor
+  ports:
+    - port: 80
+      targetPort: 8080
