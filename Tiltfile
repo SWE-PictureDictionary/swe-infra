@@ -19,18 +19,20 @@ docker_build("sinedon/config-service", "../swe-config-service")
 
 k8s_yaml([
     "ui-deployment.yaml",
-    "edge-service-deployment.yaml",
+    "edge-service.yml",
     "content-access-deployment.yaml",
     "content-manager-deployment.yaml",
     "progress-access-deployment.yaml",
     "progress-manager-deployment.yaml",
     "completion-engine-deployment.yaml",
     "event-processor-deployment.yaml",
+    "config-service-deployment.yaml",  
     "mongo-deployment.yaml",
     "postgre-deployment.yaml",
     "rabbitmq-deployment.yaml",
     "ingress.yaml"
 ])
+
 
 k8s_resource(
     "ui",

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-service
+  template:
+    metadata:
+      labels:
+        app: config-service
+    spec:
+      containers:
+        - name: config-service
+          image: sinedon/config-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8888
+
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: git
+
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+              value: https://github.com/SWE-PictureDictionary/swe-config-repo
+
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
+              value: main
+
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_CLONE_ON_START
+              value: "true"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-service
+spec:
+  selector:
+    app: config-service
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8888
+  type: ClusterIP

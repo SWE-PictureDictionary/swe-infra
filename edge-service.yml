@@ -20,7 +20,7 @@ spec:
             - containerPort: 8080
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: k8s
+              value: git
             - name: CONTENT_SERVICE_URL
               value: http://content-manager
             - name: PROGRESS_SERVICE_URL
