@@ -39,6 +39,11 @@ k8s_resource(
     links=["http://localhost"]
 )
 
+k8s_resource(
+    "edge-service",
+    port_forwards=8081,  
+    links=["http://localhost:8081"]
+)
 
 k8s_resource(
     "keycloak",

@@ -106,13 +106,13 @@ spec:
             - name: KC_BOOTSTRAP_ADMIN_PASSWORD
               value: admin
             - name: KC_HOSTNAME
-              value: http://keycloak:8080
+              value: http://localhost:8080
             - name: KC_HOSTNAME_DEBUG
               value: "true"
             - name: KC_HOSTNAME_STRICT
               value: "false"
             - name: KC_HOSTNAME_BACKCHANNEL_DYNAMIC
-              value: "true"
+              value: "false"
             - name: KC_PROXY
               value: edge
           volumeMounts:
