@@ -28,6 +28,9 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: docker
 
+            - name: SPRING_CLOUD_CONFIG_ENABLED
+              value: "false"
+
             - name: CONTENT_SERVICE_URL
               value: http://content-manager
 

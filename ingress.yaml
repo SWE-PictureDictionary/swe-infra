@@ -40,6 +40,22 @@ spec:
                 port:
                   number: 80
 
+          - path: /topics
+            pathType: Prefix
+            backend:
+              service:
+                name: edge-service
+                port:
+                  number: 80
+
+          - path: /progress
+            pathType: Prefix
+            backend:
+              service:
+                name: edge-service
+                port:
+                  number: 80
+
           - path: /
             pathType: Prefix
             backend:
