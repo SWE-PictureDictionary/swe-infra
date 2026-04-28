@@ -14,6 +14,10 @@ spec:
       labels:
         app: edge-service
     spec:
+      hostAliases:
+        - ip: 10.96.176.115
+          hostnames:
+            - auth.localhost
       containers:
         - name: edge-service
           image: sinedon/edge-service:latest
@@ -22,16 +26,19 @@ spec:
             - containerPort: 8080
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: k8s
+              value: docker
+
             - name: CONTENT_SERVICE_URL
               value: http://content-manager
+
             - name: PROGRESS_SERVICE_URL
               value: http://progress-manager
-            - name: SPRING_DATA_REDIS_HOST
-              value: redis
-            - name: SPRING_DATA_REDIS_PORT
-              value: "6379"
 
+            - name: KEYCLOAK_CLIENT_SECRET
+              value: edge-secret-dev-123
+
+            - name: KEYCLOAK_ISSUER_URI
+              value: http://auth.localhost/realms/picture-dictionary
 ---
 apiVersion: v1
 kind: Service
