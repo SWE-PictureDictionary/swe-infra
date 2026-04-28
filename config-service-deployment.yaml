@@ -18,17 +18,13 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8888
-
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: git
-
             - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
               value: https://github.com/SWE-PictureDictionary/swe-config-repo
-
             - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
               value: main
-
             - name: SPRING_CLOUD_CONFIG_SERVER_GIT_CLONE_ON_START
               value: "true"
 
@@ -43,5 +39,8 @@ spec:
   ports:
     - name: http
       port: 80
+      targetPort: 8888
+    - name: config
+      port: 8888
       targetPort: 8888
   type: ClusterIP
